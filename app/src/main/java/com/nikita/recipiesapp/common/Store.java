@@ -11,10 +11,18 @@ import com.nikita.recipiesapp.common.utils.Check;
 public final class Store<State> {
   private final MutableLiveData<State> liveData = new MutableLiveData<>();
   private final Reducer<State> reducer;
+  private final Consumer<Action> actionConsumer;
 
   public Store(@NonNull Reducer<State> reducer, @NonNull State initialState) {
     this.reducer = reducer;
     liveData.setValue(initialState);
+    this.actionConsumer = this.getStoreConsumer();
+  }
+
+  public Store(@NonNull Reducer<State> reducer, @NonNull Middleware<State>[] middlewares, @NonNull State initialState) {
+    this.reducer = reducer;
+    liveData.setValue(initialState);
+    this.actionConsumer = combineMiddlewares(this, middlewares);
   }
 
   @NonNull
@@ -36,10 +44,11 @@ public final class Store<State> {
   public void dispatch(Action action) {
     if (BuildConfig.IS_UI_TESTING) return;
 
-    State state = liveData.getValue();
-    Check.notNull(state);
+    actionConsumer.consume(action);
+  }
 
-    liveData.setValue(reducer.reduce(state, action));
+  private Consumer<Action> getStoreConsumer() {
+    return action -> liveData.setValue(reducer.reduce(getState(), action));
   }
 
   public static class ReducerCombiner<State> implements Reducer<State> {
@@ -60,5 +69,14 @@ public final class Store<State> {
 
       return state;
     }
+  }
+
+  private static <State> Consumer<Action> combineMiddlewares(Store<State> store, Middleware<State>[] middlewares) {
+    Consumer<Action> currentConsumer = store.getStoreConsumer();
+    for (Middleware<State> middleware : middlewares) {
+      middleware.init(store, currentConsumer);
+      currentConsumer = middleware;
+    }
+    return currentConsumer;
   }
 }
