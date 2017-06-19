@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 public final class AppState {
-  public final boolean isLoading;
+  public final boolean isDataLoading;
   @Nullable
   public final String notification;
   @Nullable
@@ -20,18 +20,16 @@ public final class AppState {
   @NonNull
   public final List<Recipe> recipes;
 
-  @NonNull
-  private final String selectedRecipeId;
-  @NonNull
-  private final String selectedStepId;
+  private final int selectedRecipeId;
+  private final int selectedStepId;
 
-  public AppState(boolean isLoading,
+  public AppState(boolean isDataLoading,
                   String notification,
                   String error,
                   List<Recipe> recipes,
-                  String selectedRecipeId,
-                  String selectedStepId) {
-    this.isLoading = isLoading;
+                  int selectedRecipeId,
+                  int selectedStepId) {
+    this.isDataLoading = isDataLoading;
     this.notification = notification;
     this.error = error;
     this.recipes = recipes;
@@ -39,40 +37,40 @@ public final class AppState {
     this.selectedStepId = selectedStepId;
   }
 
-  public static AppState create(boolean isLoading,
+  public static AppState create(boolean isDataLoading,
                                 String notification,
                                 String error,
                                 List<Recipe> recipes,
-                                String selectedRecipeId,
-                                String selectedStepId) {
-    return new AppState(isLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+                                int selectedRecipeId,
+                                int selectedStepId) {
+    return new AppState(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
   public static AppState initial() {
-    return create(true, null, null, Collections.emptyList(), "", "");
+    return create(true, null, null, Collections.emptyList(), -1, -1);
   }
 
-  public AppState withLoading(boolean isLoading) {
-    return create(isLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+  public AppState withLoading(boolean isDataLoading) {
+    return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
   public AppState withNotification(@NonNull String notification) {
-    return create(isLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+    return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
   public AppState withError(@NonNull String error) {
-    return create(isLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+    return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
   public AppState withRecipes(@NonNull List<Recipe> recipes) {
-    return create(isLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+    return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
   public AppState withSelectedRecipe(@NonNull Recipe recipe) {
-    return create(isLoading, notification, error, recipes, recipe.id, selectedStepId);
+    return create(isDataLoading, notification, error, recipes, recipe.id, selectedStepId);
   }
 
   public AppState withSelectedStep(@NonNull Step step) {
-    return create(isLoading, notification, error, recipes, selectedRecipeId, step.id);
+    return create(isDataLoading, notification, error, recipes, selectedRecipeId, step.id);
   }
 }

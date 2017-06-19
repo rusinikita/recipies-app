@@ -4,6 +4,10 @@ package com.nikita.recipiesapp.middlewares;
 import android.accounts.NetworkErrorException;
 import android.net.Uri;
 
+import com.nikita.recipiesapp.actions.AddLoadedRecipes;
+import com.nikita.recipiesapp.actions.LoadData;
+import com.nikita.recipiesapp.actions.ShowDataLoading;
+import com.nikita.recipiesapp.actions.ShowError;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Ingredient;
 import com.nikita.recipiesapp.common.models.Recipe;
@@ -26,7 +30,15 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
 
   @Override
   public void consume(Action action) {
-
+    wrappedConsumer.consume(action);
+    if (action instanceof LoadData) {
+      store.dispatch(new ShowDataLoading());
+      try {
+        store.dispatch(new AddLoadedRecipes(getRecipes()));
+      } catch (Exception e) {
+        store.dispatch(new ShowError(e.getMessage()));
+      }
+    }
   }
 
   public List<Recipe> getRecipes() throws Exception {
