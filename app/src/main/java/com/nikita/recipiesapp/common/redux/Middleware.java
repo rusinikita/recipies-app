@@ -1,4 +1,4 @@
-package com.nikita.recipiesapp.common;
+package com.nikita.recipiesapp.common.redux;
 
 
 public abstract class Middleware<State> implements Consumer<Action> {

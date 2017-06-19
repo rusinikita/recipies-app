@@ -1,4 +1,4 @@
-package com.nikita.recipiesapp.common;
+package com.nikita.recipiesapp.common.redux;
 
 
 import android.arch.lifecycle.LifecycleOwner;
