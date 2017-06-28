@@ -33,11 +33,13 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
     wrappedConsumer.consume(action);
     if (action instanceof LoadData) {
       store.dispatch(new ShowDataLoading());
-      try {
-        store.dispatch(new AddLoadedRecipes(getRecipes()));
-      } catch (Exception e) {
-        store.dispatch(new ShowError(e.getMessage()));
-      }
+      new Thread(() -> {
+        try {
+          store.dispatch(new AddLoadedRecipes(getRecipes()));
+        } catch (Exception e) {
+          store.dispatch(new ShowError(e.getMessage()));
+        }
+      }).run();
     }
   }
 

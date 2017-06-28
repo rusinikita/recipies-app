@@ -48,7 +48,7 @@ public final class Store<State> {
   }
 
   private Consumer<Action> getStoreConsumer() {
-    return action -> liveData.setValue(reducer.reduce(getState(), action));
+    return action -> liveData.postValue(reducer.reduce(getState(), action));
   }
 
   public static class ReducerCombiner<State> implements Reducer<State> {
