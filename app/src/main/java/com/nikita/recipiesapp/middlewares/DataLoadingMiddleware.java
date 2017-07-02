@@ -37,14 +37,15 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
         try {
           store.dispatch(new AddLoadedRecipes(getRecipes()));
         } catch (Exception e) {
+          e.printStackTrace();
           store.dispatch(new ShowError(e.getMessage()));
         }
-      }).run();
+      }).start();
     }
   }
 
   public List<Recipe> getRecipes() throws Exception {
-    Uri uri = Uri.parse("http://go.udacity.com/android-baking-app-json");
+    Uri uri = Uri.parse("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json");
 
     URL url = new URL(uri.toString());
     InputStream in = url.openConnection().getInputStream();
@@ -103,8 +104,8 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
       int id = jo.getInt("id");
       String shortDescription = jo.getString("shortDescription");
       String description = jo.getString("description");
-      String videoUrl = jo.getString("videoUrl");
-      String thumbnailUrl = jo.getString("thumbnailUrl");
+      String videoUrl = jo.getString("videoURL");
+      String thumbnailUrl = jo.getString("thumbnailURL");
 
       steps.add(new Step(id, shortDescription, description, videoUrl, thumbnailUrl));
     }

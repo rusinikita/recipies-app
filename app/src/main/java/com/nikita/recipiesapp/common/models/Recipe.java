@@ -28,4 +28,16 @@ public final class Recipe {
   public String getImageUri() {
     return (image != null && !image.isEmpty()) ? image : "https://i0.wp.com/bakingamoment.com/wp-content/uploads/2015/03/4255featured2.jpg?w=720";
   }
+
+  @Override
+  public String toString() {
+    return "{" +
+      "id:" + id +
+      "name:" + name +
+      "ingredients:" + ingredients +
+      "steps:" + steps +
+      "servings:" + servings +
+      "image:" + image +
+      "}";
+  }
 }

@@ -47,7 +47,7 @@ public final class AppState {
   }
 
   public static AppState initial() {
-    return create(true, null, null, Collections.emptyList(), -1, -1);
+    return create(false, null, null, Collections.emptyList(), -1, -1);
   }
 
   public AppState withLoading(boolean isDataLoading) {
@@ -72,5 +72,23 @@ public final class AppState {
 
   public AppState withSelectedStep(@NonNull Step step) {
     return create(isDataLoading, notification, error, recipes, selectedRecipeId, step.id);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder()
+      .append("isDataLoading:" + isDataLoading + "\n")
+      .append("notification:" + notification + "\n")
+      .append("error:" + error + "\n")
+      .append("recipes : [\n");
+
+    for (Recipe recipe : recipes) {
+      sb.append("    " + recipe.toString() + "\n");
+    }
+
+    sb.append("]\n")
+      .append("selectedRecipeId:" + selectedRecipeId + "\n")
+      .append("selectedStepId:" + selectedStepId + "\n");
+    return sb.toString();
   }
 }
