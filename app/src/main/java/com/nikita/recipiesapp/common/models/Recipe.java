@@ -9,7 +9,7 @@ public final class Recipe {
   public final List<Ingredient> ingredients;
   public final List<Step> steps;
   public final int servings;
-  public final String image;
+  private final String image;
 
   public Recipe(int id,
                 String name,
@@ -23,5 +23,9 @@ public final class Recipe {
     this.steps = steps;
     this.servings = servings;
     this.image = image;
+  }
+
+  public String getImageUri() {
+    return (image != null && !image.isEmpty()) ? image : "https://i0.wp.com/bakingamoment.com/wp-content/uploads/2015/03/4255featured2.jpg?w=720";
   }
 }
