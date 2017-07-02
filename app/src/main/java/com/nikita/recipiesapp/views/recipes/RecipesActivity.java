@@ -1,24 +1,46 @@
 package com.nikita.recipiesapp.views.recipes;
 
+import android.arch.lifecycle.LifecycleActivity;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
+import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
+import com.nikita.recipiesapp.common.AppState;
+import com.nikita.recipiesapp.common.redux.Renderer;
 
-public final class RecipesActivity extends AppCompatActivity {
+public final class RecipesActivity extends LifecycleActivity implements Renderer<AppState> {
+  private AppBarLayout appBar;
+  private final RecipesController recipesController = new RecipesController();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.recipes_activity);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-      .setAction("Action", null).show());
+    appBar = (AppBarLayout) findViewById(R.id.app_bar);
+
+    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+    recyclerView.setAdapter(recipesController.getAdapter());
+
+    App.appStore.subscribe(this);
+  }
+
+  @Override
+  public void render(@NonNull AppState appState) {
+    recipesController.setData(appState.recipes, appState.isDataLoading);
+    String error = appState.error;
+    if (error != null) {
+      Snackbar.make(appBar, error, Snackbar.LENGTH_INDEFINITE).show();
+    }
+    String notification = appState.notification;
+    if (notification != null) {
+      Snackbar.make(appBar, notification, Snackbar.LENGTH_INDEFINITE).show();
+    }
   }
 }

@@ -2,6 +2,7 @@ package com.nikita.recipiesapp;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nikita.recipiesapp.actions.LoadData;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.redux.Middleware;
@@ -37,5 +38,6 @@ public final class App extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
+    Fresco.initialize(this);
   }
 }

@@ -20,6 +20,7 @@ final class RecipesController extends Typed2EpoxyController<List<Recipe>, Boolea
         .id(recipe.id)
         .imageUri(recipe.getImageUri())
         .name(recipe.name)
+        .onClickListener_OnClickListener((model, parentView, clickedView, position) -> {})
         .addTo(this);
     }
   }
