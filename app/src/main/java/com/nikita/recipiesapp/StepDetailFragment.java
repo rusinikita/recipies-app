@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nikita.recipiesapp.dummy.DummyContent;
+import com.nikita.recipiesapp.views.steps.StepListActivity;
 
 /**
  * A fragment representing a single Step detail screen.

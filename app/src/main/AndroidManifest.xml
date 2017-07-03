@@ -14,18 +14,18 @@
         android:theme="@style/AppTheme"
         android:fullBackupContent="false">
         <activity
-            android:name=".StepListActivity"
+            android:name=".views.steps.StepListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".StepDetailActivity"
             android:label="@string/title_step_detail"
-            android:parentActivityName=".StepListActivity"
+            android:parentActivityName=".views.steps.StepListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nikita.recipiesapp.StepListActivity"/>
+                android:value="com.nikita.recipiesapp.views.steps.StepListActivity"/>
         </activity>
         <activity
             android:name=".views.recipes.RecipesActivity"

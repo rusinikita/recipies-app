@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import com.nikita.recipiesapp.views.steps.StepListActivity;
+
 /**
  * An activity representing a single Step detail screen. This
  * activity is only used narrow width devices. On tablet-size devices,
@@ -22,7 +24,7 @@ public class StepDetailActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_step_detail);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
