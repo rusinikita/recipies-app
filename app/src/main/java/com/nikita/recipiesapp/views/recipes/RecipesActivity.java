@@ -35,11 +35,11 @@ public final class RecipesActivity extends LifecycleActivity implements Renderer
   public void render(@NonNull AppState appState) {
     recipesController.setData(appState.recipes, appState.isDataLoading);
     String error = appState.error;
-    if (error != null) {
+    if (error != null && !error.isEmpty()) {
       Snackbar.make(appBar, error, Snackbar.LENGTH_INDEFINITE).show();
     }
     String notification = appState.notification;
-    if (notification != null) {
+    if (notification != null && !notification.isEmpty()) {
       Snackbar.make(appBar, notification, Snackbar.LENGTH_INDEFINITE).show();
     }
   }
