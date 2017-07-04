@@ -20,8 +20,8 @@ public final class AppState {
   @NonNull
   public final List<Recipe> recipes;
 
-  private final int selectedRecipeId;
-  private final int selectedStepId;
+  public final int selectedRecipeId;
+  public final int selectedStepId;
 
   public AppState(boolean isDataLoading,
                   String notification,
@@ -44,6 +44,15 @@ public final class AppState {
                                 int selectedRecipeId,
                                 int selectedStepId) {
     return new AppState(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+  }
+
+  public Recipe selectedRecipe() {
+    for (Recipe recipe : recipes) {
+      if (recipe.id == selectedRecipeId) {
+        return recipe;
+      }
+    }
+    throw new IllegalStateException("no selected recipe");
   }
 
   public static AppState initial() {

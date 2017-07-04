@@ -1,6 +1,8 @@
 package com.nikita.recipiesapp.views.steps;
 
 
+import android.view.View;
+
 import com.airbnb.epoxy.EpoxyAttribute;
 import com.airbnb.epoxy.EpoxyModelWithHolder;
 import com.nikita.recipiesapp.R;
@@ -10,6 +12,10 @@ import com.nikita.recipiesapp.views.common.TextViewHolder;
 class StepModel extends EpoxyModelWithHolder<TextViewHolder> {
   @EpoxyAttribute
   Step step;
+  @EpoxyAttribute
+  boolean isSelected;
+  @EpoxyAttribute
+  View.OnClickListener clickListener;
 
   @Override
   protected TextViewHolder createNewHolder() {
@@ -25,5 +31,7 @@ class StepModel extends EpoxyModelWithHolder<TextViewHolder> {
   public void bind(TextViewHolder holder) {
     super.bind(holder);
     holder.text.setText(step.shortDescription);
+    holder.text.setSelected(isSelected);
+    holder.text.setOnClickListener(clickListener);
   }
 }
