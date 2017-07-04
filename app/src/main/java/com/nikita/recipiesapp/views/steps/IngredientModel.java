@@ -1,16 +1,13 @@
 package com.nikita.recipiesapp.views.steps;
 
 
-import android.view.View;
-import android.widget.TextView;
-
 import com.airbnb.epoxy.EpoxyAttribute;
-import com.airbnb.epoxy.EpoxyHolder;
 import com.airbnb.epoxy.EpoxyModelWithHolder;
 import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.common.models.Ingredient;
+import com.nikita.recipiesapp.views.common.TextViewHolder;
 
-class IngredientModel extends EpoxyModelWithHolder<IngredientModel.IngredientHolder> {
+class IngredientModel extends EpoxyModelWithHolder<TextViewHolder> {
   @EpoxyAttribute
   Ingredient ingredient;
 
@@ -20,22 +17,13 @@ class IngredientModel extends EpoxyModelWithHolder<IngredientModel.IngredientHol
   }
 
   @Override
-  protected IngredientHolder createNewHolder() {
-    return new IngredientHolder();
+  protected TextViewHolder createNewHolder() {
+    return new TextViewHolder();
   }
 
   @Override
-  public void bind(IngredientHolder holder) {
+  public void bind(TextViewHolder holder) {
     super.bind(holder);
     holder.text.setText(ingredient.ingredient + ", " + ingredient.quantity + " " + ingredient.measure);
-  }
-
-  static final class IngredientHolder extends EpoxyHolder {
-    TextView text;
-
-    @Override
-    protected void bindView(View itemView) {
-      text = (TextView) itemView;
-    }
   }
 }
