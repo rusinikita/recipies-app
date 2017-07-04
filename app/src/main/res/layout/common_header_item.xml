@@ -9,5 +9,5 @@
     android:maxLines="1"
     android:ellipsize="end"
     tools:text="Starting prep"
-    android:background="?attr/selectableItemBackground"
+    android:background="@color/header_color"
     />

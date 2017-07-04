@@ -11,6 +11,7 @@ import com.nikita.recipiesapp.common.redux.Store;
 import com.nikita.recipiesapp.middlewares.DataLoadingMiddleware;
 import com.nikita.recipiesapp.middlewares.LoggingMiddleware;
 import com.nikita.recipiesapp.reducers.AddLoadedRecipesReducer;
+import com.nikita.recipiesapp.reducers.SelectRecipeReducer;
 import com.nikita.recipiesapp.reducers.ShowErrorReducer;
 import com.nikita.recipiesapp.reducers.ShowLoadingReducer;
 import com.nikita.recipiesapp.reducers.ShowNotificationReducer;
@@ -25,7 +26,8 @@ public final class App extends Application {
       new ShowLoadingReducer(),
       new ShowErrorReducer(),
       new ShowNotificationReducer(),
-      new AddLoadedRecipesReducer()
+      new AddLoadedRecipesReducer(),
+      new SelectRecipeReducer()
     });
     Middleware<AppState>[] middlewares = new Middleware[]{
       new DataLoadingMiddleware(),

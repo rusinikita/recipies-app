@@ -11,13 +11,15 @@ import android.support.v7.widget.RecyclerView;
 
 import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
+import com.nikita.recipiesapp.actions.SelectRecipe;
 import com.nikita.recipiesapp.common.AppState;
+import com.nikita.recipiesapp.common.models.Recipe;
 import com.nikita.recipiesapp.common.redux.Renderer;
 import com.nikita.recipiesapp.views.steps.StepListActivity;
 
 public final class RecipesActivity extends LifecycleActivity implements Renderer<AppState> {
   private AppBarLayout appBar;
-  private final RecipesController recipesController = new RecipesController(recipe -> startActivity(new Intent(this, StepListActivity.class)));
+  private final RecipesController recipesController = new RecipesController(this::onRecipeSelection);
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -44,5 +46,10 @@ public final class RecipesActivity extends LifecycleActivity implements Renderer
     if (notification != null && !notification.isEmpty()) {
       Snackbar.make(appBar, notification, Snackbar.LENGTH_INDEFINITE).show();
     }
+  }
+
+  private void onRecipeSelection(Recipe recipe) {
+    App.appStore.dispatch(new SelectRecipe(recipe));
+    startActivity(new Intent(this, StepListActivity.class));
   }
 }
