@@ -1,6 +1,7 @@
 package com.nikita.recipiesapp.views.recipes;
 
 import android.arch.lifecycle.LifecycleActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -12,10 +13,11 @@ import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.redux.Renderer;
+import com.nikita.recipiesapp.views.steps.StepListActivity;
 
 public final class RecipesActivity extends LifecycleActivity implements Renderer<AppState> {
   private AppBarLayout appBar;
-  private final RecipesController recipesController = new RecipesController();
+  private final RecipesController recipesController = new RecipesController(recipe -> startActivity(new Intent(this, StepListActivity.class)));
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

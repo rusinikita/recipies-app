@@ -1,26 +1,31 @@
 package com.nikita.recipiesapp.views.recipes;
 
 
-import com.airbnb.epoxy.AutoModel;
 import com.airbnb.epoxy.Typed2EpoxyController;
 import com.nikita.recipiesapp.common.models.Recipe;
+import com.nikita.recipiesapp.common.redux.Consumer;
 import com.nikita.recipiesapp.views.common.LoadingModel;
 
 import java.util.List;
 
 final class RecipesController extends Typed2EpoxyController<List<Recipe>, Boolean> {
-  @AutoModel LoadingModel loadingModel;
+  private final Consumer<Recipe> recipeClick;
+
+  RecipesController(Consumer<Recipe> recipeClick) {
+    this.recipeClick = recipeClick;
+  }
 
   @Override
   protected void buildModels(List<Recipe> data, Boolean isLoading) {
-    loadingModel.addIf(isLoading, this);
+    new LoadingModel()
+      .id(1)
+      .addIf(isLoading, this);
 
     for (Recipe recipe : data) {
       new RecipeViewModel_()
         .id(recipe.id)
-        .imageUri(recipe.getImageUri())
-        .name(recipe.name)
-        .onClickListener_OnClickListener((model, parentView, clickedView, position) -> {})
+        .recipe(recipe)
+        .onClickListener_OnClickListener((model, parentView, clickedView, position) -> recipeClick.consume(model.recipe()))
         .addTo(this);
     }
   }

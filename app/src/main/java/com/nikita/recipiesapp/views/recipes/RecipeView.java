@@ -11,6 +11,7 @@ import com.airbnb.epoxy.ModelProp;
 import com.airbnb.epoxy.ModelView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nikita.recipiesapp.R;
+import com.nikita.recipiesapp.common.models.Recipe;
 
 @ModelView(defaultLayout = R.layout.recipes_item)
 final class RecipeView extends CardView {
@@ -34,14 +35,10 @@ final class RecipeView extends CardView {
     name = (TextView) findViewById(R.id.name);
   }
 
-  @ModelProp()
-  void setImageUri(String imageUri) {
-    image.setImageURI(imageUri);
-  }
-
-  @ModelProp()
-  void setName(String name) {
-    this.name.setText(name);
+  @ModelProp(options = ModelProp.Option.DoNotHash)
+  void setRecipe(Recipe recipe) {
+    name.setText(recipe.name);
+    image.setImageURI(recipe.getImageUri());
   }
 
   @ModelProp(options = ModelProp.Option.DoNotHash)
