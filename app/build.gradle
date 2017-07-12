@@ -26,6 +26,14 @@ android {
     }
 }
 
+// For solving conflict between test and support lib dependencies
+// https://github.com/JakeWharton/u2020/blob/05a57bf43b9b61f16d32cbe8717af77cd608b0fb/build.gradle#L136-L140
+configurations.all {
+    resolutionStrategy {
+        force 'com.android.support:support-annotations:23.1.1'
+    }
+}
+
 dependencies {
     // core
     compile "android.arch.lifecycle:runtime:1.0.0-alpha1"
@@ -47,8 +55,11 @@ dependencies {
     annotationProcessor 'com.airbnb.android:epoxy-processor:2.2.0'
 
     // testing
+    // App's dependencies, including test
     testCompile 'junit:junit:4.12'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    // androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2' TODO solve dependency conflicts
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
 }
