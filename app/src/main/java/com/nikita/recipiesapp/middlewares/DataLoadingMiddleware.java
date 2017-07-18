@@ -14,6 +14,7 @@ import com.nikita.recipiesapp.common.models.Recipe;
 import com.nikita.recipiesapp.common.models.Step;
 import com.nikita.recipiesapp.common.redux.Action;
 import com.nikita.recipiesapp.common.redux.Middleware;
+import com.nikita.recipiesapp.dummy.DummyContent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +36,7 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
       store.dispatch(new ShowDataLoading());
       new Thread(() -> {
         try {
-          store.dispatch(new AddLoadedRecipes(getRecipes()));
+          store.dispatch(new AddLoadedRecipes(getDummyRecipies()));
         } catch (Exception e) {
           e.printStackTrace();
           store.dispatch(new ShowError(e.getMessage()));
@@ -59,6 +60,10 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
     } else {
       throw new NetworkErrorException("No data in response");
     }
+  }
+
+  public List<Recipe> getDummyRecipies() throws Exception {
+    return parse(DummyContent.DUMMY_RECIPIES_TEXT);
   }
 
   public List<Recipe> parse(String response) throws JSONException {
