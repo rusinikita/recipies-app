@@ -62,11 +62,11 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
     }
   }
 
-  public List<Recipe> getDummyRecipies() throws Exception {
+  private List<Recipe> getDummyRecipies() throws Exception {
     return parse(DummyContent.DUMMY_RECIPIES_TEXT);
   }
 
-  public List<Recipe> parse(String response) throws JSONException {
+  private List<Recipe> parse(String response) throws JSONException {
     LinkedList<Recipe> recipes = new LinkedList<>();
 
     JSONArray ja = new JSONArray(response);
@@ -86,7 +86,7 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
     return recipes;
   }
 
-  public List<Ingredient> getIngredients(JSONArray ja) throws JSONException {
+  private List<Ingredient> getIngredients(JSONArray ja) throws JSONException {
     LinkedList<Ingredient> ingredients = new LinkedList<>();
 
     for (int i = 0; i < ja.length(); i++) {
@@ -101,7 +101,7 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
     return new ArrayList<>(ingredients);
   }
 
-  public List<Step> getSteps(JSONArray ja) throws JSONException {
+  private List<Step> getSteps(JSONArray ja) throws JSONException {
     LinkedList<Step> steps = new LinkedList<>();
 
     for (int i = 0; i < ja.length(); i++) {
