@@ -16,6 +16,8 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.nikita.recipiesapp.EspressoTestUtils.callRender;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -26,16 +28,18 @@ public class RecipesActivityTest {
     RecipesActivity.class);
 
   @Test
-  public void shouldShowLoading() {
-    mActivityRule.getActivity().render(AppState.initial().withLoading(true));
-    onView(ViewMatchers.withId(R.id.loading_indicator))
-      .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))); // todo need recycler view validations
+  public void shouldHideLoading() {
+    callRender(mActivityRule, AppState.initial().withLoading(false));
+
+    onView(withId(R.id.loading_indicator))
+      .check(doesNotExist());
   }
 
   @Test
-  public void shouldHideLoading() {
-    mActivityRule.getActivity().render(AppState.initial());
-    onView(ViewMatchers.withId(R.id.loading_indicator))
-      .check(doesNotExist());
+  public void shouldShowLoading() {
+    callRender(mActivityRule, AppState.initial().withLoading(true));
+
+    onView(withId(R.id.loading_indicator))
+      .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
   }
 }

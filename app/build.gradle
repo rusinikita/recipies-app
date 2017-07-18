@@ -12,7 +12,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField 'boolean', 'IS_UI_TESTING', "false"
+        buildConfigField 'boolean', 'IS_UI_TESTING', "true"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

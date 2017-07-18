@@ -34,7 +34,9 @@ public final class App extends Application {
       new LoggingMiddleware()
     };
     appStore = new Store<>(appReducer, middlewares, AppState.initial());
-    appStore.dispatch(new LoadData());
+    if (!BuildConfig.IS_UI_TESTING) {
+      appStore.dispatch(new LoadData());
+    }
   }
 
   @Override
