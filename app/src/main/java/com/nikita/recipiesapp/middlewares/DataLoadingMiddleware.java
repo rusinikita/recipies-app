@@ -3,6 +3,7 @@ package com.nikita.recipiesapp.middlewares;
 
 import android.accounts.NetworkErrorException;
 import android.net.Uri;
+import android.support.annotation.VisibleForTesting;
 
 import com.nikita.recipiesapp.actions.AddLoadedRecipes;
 import com.nikita.recipiesapp.actions.LoadData;
@@ -45,7 +46,7 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
     }
   }
 
-  public List<Recipe> getRecipes() throws Exception {
+  private static List<Recipe> getRecipes() throws Exception {
     Uri uri = Uri.parse("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json");
 
     URL url = new URL(uri.toString());
@@ -62,11 +63,12 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
     }
   }
 
-  private List<Recipe> getDummyRecipies() throws Exception {
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  public static List<Recipe> getDummyRecipies() throws Exception {
     return parse(DummyContent.DUMMY_RECIPIES_TEXT);
   }
 
-  private List<Recipe> parse(String response) throws JSONException {
+  private static List<Recipe> parse(String response) throws JSONException {
     LinkedList<Recipe> recipes = new LinkedList<>();
 
     JSONArray ja = new JSONArray(response);
@@ -86,7 +88,7 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
     return recipes;
   }
 
-  private List<Ingredient> getIngredients(JSONArray ja) throws JSONException {
+  private static List<Ingredient> getIngredients(JSONArray ja) throws JSONException {
     LinkedList<Ingredient> ingredients = new LinkedList<>();
 
     for (int i = 0; i < ja.length(); i++) {
@@ -101,7 +103,7 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
     return new ArrayList<>(ingredients);
   }
 
-  private List<Step> getSteps(JSONArray ja) throws JSONException {
+  private static List<Step> getSteps(JSONArray ja) throws JSONException {
     LinkedList<Step> steps = new LinkedList<>();
 
     for (int i = 0; i < ja.length(); i++) {
