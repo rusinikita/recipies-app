@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
-import com.nikita.recipiesapp.StepDetailActivity;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Recipe;
 import com.nikita.recipiesapp.common.redux.Renderer;
@@ -30,7 +29,7 @@ public class StepListActivity extends LifecycleActivity implements Renderer<AppS
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_step_list);
+    setContentView(R.layout.step_list_activity);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     toolbar.setTitle(getTitle());

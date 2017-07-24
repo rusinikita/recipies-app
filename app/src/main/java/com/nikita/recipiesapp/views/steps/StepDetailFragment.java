@@ -1,16 +1,16 @@
-package com.nikita.recipiesapp;
+package com.nikita.recipiesapp.views.steps;
 
 import android.app.Activity;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.dummy.DummyContent;
-import com.nikita.recipiesapp.views.steps.StepListActivity;
 
 /**
  * A fragment representing a single Step detail screen.

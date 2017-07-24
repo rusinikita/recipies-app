@@ -56,7 +56,7 @@
         android:clipToPadding="false"
         app:layoutManager="LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/step_list_content"
+        tools:listitem="@layout/step_list_step_item"
         />
 
     <android.support.design.widget.FloatingActionButton
