@@ -24,18 +24,17 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:title="@string/app_name"
-            app:collapsedTitleGravity="top|center_horizontal"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            >
 
-            <ak.sh.ay.oblique.ObliqueView
+            <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/main_picture"
-                app:ending_slant_angle="0"
-                app:starting_slant_angle="5"
                 android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
                 />
 
             <android.support.v7.widget.Toolbar
