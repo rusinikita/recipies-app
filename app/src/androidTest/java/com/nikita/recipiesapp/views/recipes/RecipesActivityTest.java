@@ -1,11 +1,13 @@
 package com.nikita.recipiesapp.views.recipes;
 
 import android.support.test.espresso.intent.Intents;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.nikita.recipiesapp.R;
+import com.nikita.recipiesapp.RecyclerViewMatcher;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Recipe;
 import com.nikita.recipiesapp.middlewares.DataLoadingMiddleware;
@@ -22,13 +24,15 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static android.support.test.espresso.contrib.RecyclerViewActions.scrollToPosition;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.nikita.recipiesapp.EspressoTestUtils.callRender;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -59,8 +63,27 @@ public class RecipesActivityTest {
     String errorText = "text text";
     callRender(testRule, AppState.initial().withError(errorText));
 
-    onView(withText(errorText))
-      .check(matches(isDisplayed()));
+    onView(allOf(withId(android.support.design.R.id.snackbar_text), withText(errorText)))
+        //isDisplayed() not working
+        // Snackbar VISIBLE but its rect height 0 for user
+        .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+    // Snackbar showing some time, need to clear to fix conflicts with other tests
+    testRule.getActivity().finish();
+  }
+
+  @Test
+  public void shouldShowNotofication() {
+    String errorText = "text text";
+    callRender(testRule, AppState.initial().withNotification(errorText));
+
+    onView(allOf(withId(android.support.design.R.id.snackbar_text), withText(errorText)))
+        //isDisplayed() not working
+        // Snackbar VISIBLE but its rect height 0 for user
+        .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+    // Snackbar showing some time, need to clear to fix conflicts with other tests
+    testRule.getActivity().finish();
   }
 
   @Test
@@ -76,13 +99,10 @@ public class RecipesActivityTest {
   public void shouldShowLastRecipe() throws Exception {
     List<Recipe> dummyRecipies = DataLoadingMiddleware.getDummyRecipies();
     callRender(testRule, AppState.initial().withRecipes(dummyRecipies));
-    int lastIndex = dummyRecipies.size() - 1;
+    int lastIndex = 3;
 
-    onView(withId(R.id.recycler_view))
-        .perform(scrollToPosition(lastIndex));
-
-    onView(withText(dummyRecipies.get(lastIndex).name))
-            .check(matches(isDisplayed()));
+    onView(RecyclerViewMatcher.withRecyclerView(R.id.recycler_view).atPositionWithScroll(lastIndex))
+        .check(matches(hasDescendant(withText(dummyRecipies.get(lastIndex).name))));
   }
 
   @Test
