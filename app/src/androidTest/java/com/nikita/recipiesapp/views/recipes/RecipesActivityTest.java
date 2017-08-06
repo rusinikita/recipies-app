@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class RecipesActivityTest {
+public final class RecipesActivityTest {
 
   @Rule
   public ActivityTestRule<RecipesActivity> testRule = new ActivityTestRule<>(
