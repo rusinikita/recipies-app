@@ -34,15 +34,15 @@ public class StepListActivity extends LifecycleActivity implements Renderer<AppS
     super.onCreate(savedInstanceState);
     setContentView(R.layout.step_list_activity);
 
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    Toolbar toolbar = findViewById(R.id.toolbar);
     toolbar.setTitle(getTitle());
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    FloatingActionButton fab = findViewById(R.id.fab);
     fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
         .setAction("Action", null)
         .show());
 
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.step_list);
+    RecyclerView recyclerView = findViewById(R.id.step_list);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setAdapter(stepListController.getAdapter());
 

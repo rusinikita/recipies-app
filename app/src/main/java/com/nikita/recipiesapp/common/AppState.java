@@ -24,9 +24,9 @@ public final class AppState {
   public final int selectedStepId;
 
   public AppState(boolean isDataLoading,
-                  String notification,
-                  String error,
-                  List<Recipe> recipes,
+                  @Nullable String notification,
+                  @Nullable String error,
+                  @NonNull List<Recipe> recipes,
                   int selectedRecipeId,
                   int selectedStepId) {
     this.isDataLoading = isDataLoading;
@@ -37,12 +37,12 @@ public final class AppState {
     this.selectedStepId = selectedStepId;
   }
 
-  public static AppState create(boolean isDataLoading,
-                                String notification,
-                                String error,
-                                List<Recipe> recipes,
-                                int selectedRecipeId,
-                                int selectedStepId) {
+  private static AppState create(boolean isDataLoading,
+                                 String notification,
+                                 String error,
+                                 List<Recipe> recipes,
+                                 int selectedRecipeId,
+                                 int selectedStepId) {
     return new AppState(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
@@ -53,6 +53,15 @@ public final class AppState {
       }
     }
     throw new IllegalStateException("no selected recipe");
+  }
+
+  public Step selectedStep() {
+    for (Step step : selectedRecipe().steps) {
+      if (step.id == selectedStepId) {
+        return step;
+      }
+    }
+    throw new IllegalStateException("no selected step");
   }
 
   public static AppState initial() {
@@ -85,19 +94,18 @@ public final class AppState {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder()
-      .append("isDataLoading:" + isDataLoading + "\n")
-      .append("notification:" + notification + "\n")
-      .append("error:" + error + "\n")
-      .append("recipes : [\n");
+    StringBuilder sb = new StringBuilder().append("isDataLoading:").append(isDataLoading).append("\n")
+        .append("notification:").append(notification).append("\n")
+        .append("error:").append(error).append("\n")
+        .append("recipes : [\n");
 
     for (Recipe recipe : recipes) {
-      sb.append("    " + recipe.toString() + "\n");
+      sb.append("    ").append(recipe.toString()).append("\n");
     }
 
     sb.append("]\n")
-      .append("selectedRecipeId:" + selectedRecipeId + "\n")
-      .append("selectedStepId:" + selectedStepId + "\n");
+        .append("selectedRecipeId:").append(selectedRecipeId).append("\n")
+        .append("selectedStepId:").append(selectedStepId).append("\n");
     return sb.toString();
   }
 }

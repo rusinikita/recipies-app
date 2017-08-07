@@ -26,9 +26,9 @@ public final class RecipesActivity extends LifecycleActivity implements Renderer
     super.onCreate(savedInstanceState);
     setContentView(R.layout.recipes_activity);
 
-    appBar = (AppBarLayout) findViewById(R.id.app_bar);
+    appBar = findViewById(R.id.app_bar);
 
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    RecyclerView recyclerView = findViewById(R.id.recycler_view);
     recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
     recyclerView.setAdapter(recipesController.getAdapter());
 
