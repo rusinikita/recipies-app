@@ -11,8 +11,10 @@ import android.support.v7.widget.Toolbar;
 
 import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
+import com.nikita.recipiesapp.actions.SelectStep;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Recipe;
+import com.nikita.recipiesapp.common.models.Step;
 import com.nikita.recipiesapp.common.redux.Renderer;
 
 /**
@@ -24,7 +26,8 @@ import com.nikita.recipiesapp.common.redux.Renderer;
  * item details side-by-side using two vertical panes.
  */
 public class StepListActivity extends LifecycleActivity implements Renderer<AppState> {
-  private final StepListController stepListController = new StepListController(step -> {});
+  private final StepListController stepListController = new StepListController(this::changeStep);
+  private boolean shouldOpenDetailsActivity = true;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,14 @@ public class StepListActivity extends LifecycleActivity implements Renderer<AppS
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-      .setAction("Action", null)
-      .show());
+        .setAction("Action", null)
+        .show());
 
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.step_list);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setAdapter(stepListController.getAdapter());
+
+    shouldOpenDetailsActivity = findViewById(R.id.step_detail_container) == null;
 
     App.appStore.subscribe(this);
   }
@@ -50,5 +55,14 @@ public class StepListActivity extends LifecycleActivity implements Renderer<AppS
   public void render(@NonNull AppState appState) {
     Recipe recipe = appState.selectedRecipe();
     stepListController.setData(recipe.ingredients, recipe.steps, appState.selectedStepId);
+  }
+
+  private void changeStep(Step step) {
+
+    App.appStore.dispatch(new SelectStep(step));
+
+    if (shouldOpenDetailsActivity) {
+      StepDetailActivity.start(this);
+    }
   }
 }

@@ -1,7 +1,9 @@
 package com.nikita.recipiesapp.views.steps;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -18,6 +20,10 @@ import com.nikita.recipiesapp.R;
  * in a {@link StepListActivity}.
  */
 public class StepDetailActivity extends AppCompatActivity {
+
+  public static void start(@NonNull Context context) {
+    context.startActivity(new Intent(context, StepDetailActivity.class));
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
