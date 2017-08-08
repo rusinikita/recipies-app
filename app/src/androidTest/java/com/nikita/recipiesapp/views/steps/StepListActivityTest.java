@@ -1,4 +1,4 @@
-package com.nikita.recipiesapp.views.recipes;
+package com.nikita.recipiesapp.views.steps;
 
 import android.support.test.espresso.intent.Intents;
 import android.support.test.filters.LargeTest;
@@ -10,8 +10,6 @@ import com.nikita.recipiesapp.RecyclerViewMatcher;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Recipe;
 import com.nikita.recipiesapp.middlewares.DataLoadingMiddleware;
-import com.nikita.recipiesapp.views.steps.StepDetailActivity;
-import com.nikita.recipiesapp.views.steps.StepListActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,8 +37,8 @@ public final class StepListActivityTest {
 
   @Test
   public void shouldOpenStepDetailScreen() throws Exception {
-    List<Recipe> dummyRecipies = DataLoadingMiddleware.getDummyRecipies();
-    callRender(testRule, AppState.initial().withRecipes(dummyRecipies));
+    List<Recipe> dummyRecipes = DataLoadingMiddleware.getDummyRecipes();
+    callRender(testRule, AppState.initial().withRecipes(dummyRecipes));
 
     Intents.init();
 
@@ -54,10 +52,10 @@ public final class StepListActivityTest {
 
   @Test
   public void shouldShowItems() throws Exception {
-    List<Recipe> dummyRecipies = DataLoadingMiddleware.getDummyRecipies();
-    Recipe selectedRecipe = dummyRecipies.get(0);
+    List<Recipe> dummyRecipes = DataLoadingMiddleware.getDummyRecipes();
+    Recipe selectedRecipe = dummyRecipes.get(0);
     callRender(testRule, AppState.initial()
-        .withRecipes(dummyRecipies)
+        .withRecipes(dummyRecipes)
         .withSelectedRecipe(selectedRecipe));
 
     // 9 ingredients + 7 steps + 2 headers

@@ -4,14 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
+import com.nikita.recipiesapp.actions.MoveToNextStep;
+import com.nikita.recipiesapp.actions.MoveToPreviousStep;
 
 /**
  * An activity representing a single Step detail screen. This
@@ -32,9 +33,8 @@ public class StepDetailActivity extends AppCompatActivity {
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
-    FloatingActionButton fab = findViewById(R.id.fab);
-    fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-      .setAction("Action", null).show());
+    findViewById(R.id.previous_fab).setOnClickListener(view -> App.appStore.dispatch(new MoveToPreviousStep()));
+    findViewById(R.id.next_fab).setOnClickListener(view -> App.appStore.dispatch(new MoveToNextStep()));
 
     // Show the Up button in the action bar.
     ActionBar actionBar = getSupportActionBar();

@@ -88,27 +88,27 @@ public final class RecipesActivityTest {
 
   @Test
   public void shouldShowFirstRecipe() throws Exception {
-    List<Recipe> dummyRecipies = DataLoadingMiddleware.getDummyRecipies();
-    callRender(testRule, AppState.initial().withRecipes(dummyRecipies));
+    List<Recipe> dummyRecipes = DataLoadingMiddleware.getDummyRecipes();
+    callRender(testRule, AppState.initial().withRecipes(dummyRecipes));
 
-    onView(withText(dummyRecipies.get(0).name))
+    onView(withText(dummyRecipes.get(0).name))
             .check(matches(isDisplayed()));
   }
 
   @Test
   public void shouldShowLastRecipe() throws Exception {
-    List<Recipe> dummyRecipies = DataLoadingMiddleware.getDummyRecipies();
-    callRender(testRule, AppState.initial().withRecipes(dummyRecipies));
+    List<Recipe> dummyRecipes = DataLoadingMiddleware.getDummyRecipes();
+    callRender(testRule, AppState.initial().withRecipes(dummyRecipes));
     int lastIndex = 3;
 
     onView(RecyclerViewMatcher.withRecyclerView(R.id.recycler_view).atPositionWithScroll(lastIndex))
-        .check(matches(hasDescendant(withText(dummyRecipies.get(lastIndex).name))));
+        .check(matches(hasDescendant(withText(dummyRecipes.get(lastIndex).name))));
   }
 
   @Test
   public void shouldOpenRecipeScreenOnItemClick() throws Exception {
-    List<Recipe> dummyRecipies = DataLoadingMiddleware.getDummyRecipies();
-    callRender(testRule, AppState.initial().withRecipes(dummyRecipies));
+    List<Recipe> dummyRecipes = DataLoadingMiddleware.getDummyRecipes();
+    callRender(testRule, AppState.initial().withRecipes(dummyRecipes));
 
     Intents.init();
 

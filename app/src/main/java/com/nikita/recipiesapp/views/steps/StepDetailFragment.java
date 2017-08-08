@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Step;
@@ -28,6 +29,8 @@ public class StepDetailFragment extends LifecycleFragment implements Renderer<Ap
                            Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.step_detail, container, false);
     description = rootView.findViewById(R.id.step_detail);
+
+    App.appStore.subscribe(this);
 
     return rootView;
   }

@@ -37,7 +37,7 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
       store.dispatch(new ShowDataLoading());
       new Thread(() -> {
         try {
-          store.dispatch(new AddLoadedRecipes(getDummyRecipies()));
+          store.dispatch(new AddLoadedRecipes(getDummyRecipes()));
         } catch (Exception e) {
           e.printStackTrace();
           store.dispatch(new ShowError(e.getMessage()));
@@ -64,8 +64,8 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  public static List<Recipe> getDummyRecipies() throws Exception {
-    return parse(DummyContent.DUMMY_RECIPIES_TEXT);
+  public static List<Recipe> getDummyRecipes() throws Exception {
+    return parse(DummyContent.DUMMY_RECIPES_TEXT);
   }
 
   private static List<Recipe> parse(String response) throws JSONException {
