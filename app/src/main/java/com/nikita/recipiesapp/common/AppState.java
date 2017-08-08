@@ -46,7 +46,8 @@ public final class AppState {
     return new AppState(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
-  public Recipe selectedRecipe() {
+  @NonNull
+  public final Recipe selectedRecipe() {
     for (Recipe recipe : recipes) {
       if (recipe.id == selectedRecipeId) {
         return recipe;
@@ -55,7 +56,8 @@ public final class AppState {
     throw new IllegalStateException("no selected recipe");
   }
 
-  public Step selectedStep() {
+  @NonNull
+  public final Step selectedStep() {
     for (Step step : selectedRecipe().steps) {
       if (step.id == selectedStepId) {
         return step;
@@ -64,30 +66,64 @@ public final class AppState {
     throw new IllegalStateException("no selected step");
   }
 
+  @Nullable
+  public final Step nextStep() {
+    final List<Step> steps = selectedRecipe().steps;
+    final int currentStepIndex = currentStepIndex();
+    if (steps.size() > currentStepIndex) {
+      return steps.get(currentStepIndex + 1);
+    } else {
+      return null;
+    }
+  }
+
+  @Nullable
+  public final Step previousStep() {
+    final List<Step> steps = selectedRecipe().steps;
+    final int currentStepIndex = currentStepIndex();
+    if (currentStepIndex() > 0) {
+      return steps.get(currentStepIndex - 1);
+    } else {
+      return null;
+    }
+  }
+
+  private int currentStepIndex() {
+    Recipe recipe = selectedRecipe();
+    return recipe.steps.indexOf(selectedStep());
+  }
+
+  @NonNull
   public static AppState initial() {
     return create(false, null, null, Collections.emptyList(), -1, -1);
   }
 
+  @NonNull
   public AppState withLoading(boolean isDataLoading) {
     return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
+  @NonNull
   public AppState withNotification(@NonNull String notification) {
     return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
+  @NonNull
   public AppState withError(@NonNull String error) {
     return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
+  @NonNull
   public AppState withRecipes(@NonNull List<Recipe> recipes) {
     return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
   }
 
+  @NonNull
   public AppState withSelectedRecipe(@NonNull Recipe recipe) {
     return create(isDataLoading, notification, error, recipes, recipe.id, selectedStepId);
   }
 
+  @NonNull
   public AppState withSelectedStep(@NonNull Step step) {
     return create(isDataLoading, notification, error, recipes, selectedRecipeId, step.id);
   }

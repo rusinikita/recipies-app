@@ -1,18 +1,20 @@
 package com.nikita.recipiesapp.views.steps;
 
+import android.arch.lifecycle.LifecycleActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.actions.MoveToNextStep;
 import com.nikita.recipiesapp.actions.MoveToPreviousStep;
+import com.nikita.recipiesapp.common.AppState;
+import com.nikita.recipiesapp.common.redux.Renderer;
 
 /**
  * An activity representing a single Step detail screen. This
@@ -20,7 +22,10 @@ import com.nikita.recipiesapp.actions.MoveToPreviousStep;
  * item details are presented side-by-side with a list of items
  * in a {@link StepListActivity}.
  */
-public class StepDetailActivity extends AppCompatActivity {
+public class StepDetailActivity extends LifecycleActivity implements Renderer<AppState> {
+
+  private View prevFab;
+  private View nextFab;
 
   public static void start(@NonNull Context context) {
     context.startActivity(new Intent(context, StepDetailActivity.class));
@@ -31,16 +36,21 @@ public class StepDetailActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.step_detail_activity);
     Toolbar toolbar = findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
 
-    findViewById(R.id.previous_fab).setOnClickListener(view -> App.appStore.dispatch(new MoveToPreviousStep()));
-    findViewById(R.id.next_fab).setOnClickListener(view -> App.appStore.dispatch(new MoveToNextStep()));
+    prevFab = findViewById(R.id.previous_fab);
+    prevFab.setOnClickListener(view -> App.appStore.dispatch(new MoveToPreviousStep()));
+    nextFab = findViewById(R.id.next_fab);
+    nextFab.setOnClickListener(view -> App.appStore.dispatch(new MoveToNextStep()));
 
-    // Show the Up button in the action bar.
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+    // TODO Show the Up button in the action bar.
+
+    App.appStore.subscribe(this);
+  }
+
+  @Override
+  public void render(@NonNull AppState state) {
+    prevFab.setVisibility(state.previousStep() != null ? View.VISIBLE : View.GONE);
+    nextFab.setVisibility(state.nextStep() != null ? View.VISIBLE : View.GONE);
   }
 
   @Override
