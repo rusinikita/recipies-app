@@ -19,4 +19,14 @@ public final class Step {
     this.videoURL = videoURL;
     this.thumbnailURL = thumbnailURL;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    return obj instanceof Step && id == ((Step) obj).id;
+  }
+
+  @Override
+  public int hashCode() {
+    return id * shortDescription.length();
+  }
 }

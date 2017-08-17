@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+    android:layout_marginTop="24dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
     android:maxLines="1"
     android:ellipsize="end"
     tools:text="Starting prep"
-    android:background="@color/header_color"
     />

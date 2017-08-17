@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+    android:textColor="@color/accent_text_color_selector"
     android:maxLines="2"
     android:ellipsize="end"
     tools:text="Starting prep"

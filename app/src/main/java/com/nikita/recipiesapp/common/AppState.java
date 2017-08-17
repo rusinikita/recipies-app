@@ -116,7 +116,7 @@ public final class AppState {
 
   @NonNull
   public AppState withSelectedRecipe(@NonNull Recipe recipe) {
-    return create(isDataLoading, notification, error, recipes, recipe, selectedStep);
+    return create(isDataLoading, notification, error, recipes, recipe, recipe.steps.get(0));
   }
 
   @NonNull

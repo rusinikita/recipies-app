@@ -10,10 +10,10 @@ import com.nikita.recipiesapp.views.common.HeaderModel_;
 
 import java.util.List;
 
-public final class StepListController extends Typed3EpoxyController<List<Ingredient>, List<Step>, Step> {
+final class StepListController extends Typed3EpoxyController<List<Ingredient>, List<Step>, Step> {
   private final Consumer<Step> stepClick;
 
-  public StepListController(Consumer<Step> stepClick) {
+  StepListController(Consumer<Step> stepClick) {
     this.stepClick = stepClick;
   }
 
@@ -40,6 +40,7 @@ public final class StepListController extends Typed3EpoxyController<List<Ingredi
       new StepModel_()
         .id(step.id)
         .step(step)
+        .isSelected(step.equals(selectedStep))
         .clickListener((model, parentView, clickedView, position) -> stepClick.consume(model.step()))
         .addTo(this);
     }
