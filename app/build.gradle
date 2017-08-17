@@ -14,16 +14,27 @@ android {
 
         buildConfigField 'boolean', 'IS_UI_TESTING', "false"
     }
+
+    testBuildType "espresso"
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
+        espresso {
+            initWith debug
+            buildConfigField 'boolean', 'IS_UI_TESTING', "true"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+task runEspressoTest {
+    dependsOn 'assembleEspressoAndroidTest'
 }
 
 dependencies {
