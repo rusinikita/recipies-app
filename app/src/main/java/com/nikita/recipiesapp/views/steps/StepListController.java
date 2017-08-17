@@ -10,7 +10,7 @@ import com.nikita.recipiesapp.views.common.HeaderModel_;
 
 import java.util.List;
 
-public final class StepListController extends Typed3EpoxyController<List<Ingredient>, List<Step>, Integer> {
+public final class StepListController extends Typed3EpoxyController<List<Ingredient>, List<Step>, Step> {
   private final Consumer<Step> stepClick;
 
   public StepListController(Consumer<Step> stepClick) {
@@ -18,7 +18,7 @@ public final class StepListController extends Typed3EpoxyController<List<Ingredi
   }
 
   @Override
-  protected void buildModels(List<Ingredient> ingredients, List<Step> steps, Integer selectedStep) {
+  protected void buildModels(List<Ingredient> ingredients, List<Step> steps, Step selectedStep) {
     new HeaderModel_()
       .id(R.string.step_list_ingredients_header)
       .header(R.string.step_list_ingredients_header)

@@ -16,52 +16,48 @@ public final class AppState {
   public final String notification;
   @Nullable
   public final String error;
-
   @NonNull
   public final List<Recipe> recipes;
-
-  public final int selectedRecipeId;
-  public final int selectedStepId;
+  @Nullable
+  private final Recipe selectedRecipe;
+  @Nullable
+  private final Step selectedStep;
 
   public AppState(boolean isDataLoading,
                   @Nullable String notification,
                   @Nullable String error,
                   @NonNull List<Recipe> recipes,
-                  int selectedRecipeId,
-                  int selectedStepId) {
+                  @Nullable Recipe selectedRecipe,
+                  @Nullable Step selectedStep) {
     this.isDataLoading = isDataLoading;
     this.notification = notification;
     this.error = error;
     this.recipes = recipes;
-    this.selectedRecipeId = selectedRecipeId;
-    this.selectedStepId = selectedStepId;
+    this.selectedRecipe = selectedRecipe;
+    this.selectedStep = selectedStep;
   }
 
   private static AppState create(boolean isDataLoading,
-                                 String notification,
-                                 String error,
-                                 List<Recipe> recipes,
-                                 int selectedRecipeId,
-                                 int selectedStepId) {
-    return new AppState(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+                                 @Nullable String notification,
+                                 @Nullable String error,
+                                 @NonNull List<Recipe> recipes,
+                                 @Nullable Recipe selectedRecipe,
+                                 @Nullable Step selectedStep) {
+    return new AppState(isDataLoading, notification, error, recipes, selectedRecipe, selectedStep);
   }
 
   @NonNull
   public final Recipe selectedRecipe() {
-    for (Recipe recipe : recipes) {
-      if (recipe.id == selectedRecipeId) {
-        return recipe;
-      }
+    if (selectedRecipe != null) {
+      return selectedRecipe;
     }
     throw new IllegalStateException("no selected recipe");
   }
 
   @NonNull
   public final Step selectedStep() {
-    for (Step step : selectedRecipe().steps) {
-      if (step.id == selectedStepId) {
-        return step;
-      }
+    if (selectedStep != null) {
+      return selectedStep;
     }
     throw new IllegalStateException("no selected step");
   }
@@ -70,7 +66,7 @@ public final class AppState {
   public final Step nextStep() {
     final List<Step> steps = selectedRecipe().steps;
     final int currentStepIndex = currentStepIndex();
-    if (steps.size() > currentStepIndex) {
+    if (steps.size() - 1 > currentStepIndex) {
       return steps.get(currentStepIndex + 1);
     } else {
       return null;
@@ -95,37 +91,37 @@ public final class AppState {
 
   @NonNull
   public static AppState initial() {
-    return create(false, null, null, Collections.emptyList(), -1, -1);
+    return create(false, null, null, Collections.emptyList(), null, null);
   }
 
   @NonNull
   public AppState withLoading(boolean isDataLoading) {
-    return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+    return create(isDataLoading, notification, error, recipes, selectedRecipe, selectedStep);
   }
 
   @NonNull
   public AppState withNotification(@NonNull String notification) {
-    return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+    return create(isDataLoading, notification, error, recipes, selectedRecipe, selectedStep);
   }
 
   @NonNull
   public AppState withError(@NonNull String error) {
-    return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+    return create(isDataLoading, notification, error, recipes, selectedRecipe, selectedStep);
   }
 
   @NonNull
   public AppState withRecipes(@NonNull List<Recipe> recipes) {
-    return create(isDataLoading, notification, error, recipes, selectedRecipeId, selectedStepId);
+    return create(isDataLoading, notification, error, recipes, selectedRecipe, selectedStep);
   }
 
   @NonNull
   public AppState withSelectedRecipe(@NonNull Recipe recipe) {
-    return create(isDataLoading, notification, error, recipes, recipe.id, selectedStepId);
+    return create(isDataLoading, notification, error, recipes, recipe, selectedStep);
   }
 
   @NonNull
   public AppState withSelectedStep(@NonNull Step step) {
-    return create(isDataLoading, notification, error, recipes, selectedRecipeId, step.id);
+    return create(isDataLoading, notification, error, recipes, selectedRecipe, step);
   }
 
   @Override
@@ -140,8 +136,8 @@ public final class AppState {
     }
 
     sb.append("]\n")
-        .append("selectedRecipeId:").append(selectedRecipeId).append("\n")
-        .append("selectedStepId:").append(selectedStepId).append("\n");
+        .append("selectedRecipe:").append(selectedRecipe).append("\n")
+        .append("selectedStep:").append(selectedStep).append("\n");
     return sb.toString();
   }
 }

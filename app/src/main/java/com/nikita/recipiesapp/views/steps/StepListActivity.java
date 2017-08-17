@@ -54,7 +54,7 @@ public class StepListActivity extends LifecycleActivity implements Renderer<AppS
   @Override
   public void render(@NonNull AppState appState) {
     Recipe recipe = appState.selectedRecipe();
-    stepListController.setData(recipe.ingredients, recipe.steps, appState.selectedStepId);
+    stepListController.setData(recipe.ingredients, recipe.steps, appState.selectedStep());
   }
 
   private void changeStep(Step step) {
