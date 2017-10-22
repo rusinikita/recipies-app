@@ -1,17 +1,20 @@
 package com.nikita.recipiesapp.common.models;
 
 
+import android.support.annotation.Nullable;
+
 public final class Step {
   public final int id;
   public final String shortDescription;
   public final String description;
+  @Nullable
   public final String videoURL;
   public final String thumbnailURL;
 
   public Step(int id,
               String shortDescription,
               String description,
-              String videoURL,
+              @Nullable String videoURL,
               String thumbnailURL) {
     this.id = id;
     this.shortDescription = shortDescription;

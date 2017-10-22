@@ -31,8 +31,8 @@ final class RecipeView extends CardView {
 
     LayoutInflater.from(context).inflate(R.layout.recipes_view, this, true);
 
-    image = (SimpleDraweeView) findViewById(R.id.image);
-    name = (TextView) findViewById(R.id.name);
+    image = findViewById(R.id.image);
+    name = findViewById(R.id.name);
   }
 
   @ModelProp(options = ModelProp.Option.DoNotHash)

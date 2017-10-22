@@ -4,7 +4,6 @@ import android.arch.lifecycle.LifecycleActivity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -38,9 +37,7 @@ public class StepListActivity extends LifecycleActivity implements Renderer<AppS
     toolbar.setTitle(getTitle());
 
     FloatingActionButton fab = findViewById(R.id.fab);
-    fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        .setAction("Action", null)
-        .show());
+    fab.setOnClickListener(view -> StepDetailActivity.start(this));
 
     RecyclerView recyclerView = findViewById(R.id.step_list);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
