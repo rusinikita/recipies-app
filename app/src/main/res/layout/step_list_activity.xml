@@ -46,7 +46,6 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/step_list"
-        android:name="com.nikita.recipiesapp.StepListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="24dp"

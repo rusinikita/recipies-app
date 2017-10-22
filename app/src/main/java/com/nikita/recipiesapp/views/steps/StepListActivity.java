@@ -37,7 +37,9 @@ public class StepListActivity extends LifecycleActivity implements Renderer<AppS
     toolbar.setTitle(getTitle());
 
     FloatingActionButton fab = findViewById(R.id.fab);
-    fab.setOnClickListener(view -> StepDetailActivity.start(this));
+    if (fab != null) {
+      fab.setOnClickListener(view -> StepDetailActivity.start(this));
+    }
 
     RecyclerView recyclerView = findViewById(R.id.step_list);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -1,37 +1,66 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="16dp"
-              android:layout_marginRight="16dp"
-              android:baselineAligned="false"
-              android:divider="?android:attr/dividerHorizontal"
-              android:orientation="horizontal"
-              android:showDividers="middle"
-              tools:context="com.nikita.recipiesapp.views.steps.StepListActivity">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nikita.recipiesapp.views.steps.StepListActivity">
 
     <!--
     This layout is a two-pane layout for the Steps
     master/detail flow.
     -->
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteX="0dp"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/step_list"
-        android:name="com.nikita.recipiesapp.StepListFragment"
-        android:layout_width="@dimen/item_width"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:2"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.nikita.recipiesapp.views.steps.StepListActivity"
-        tools:listitem="@layout/step_list_step_item"/>
+        tools:listitem="@layout/step_list_step_item"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteX="0dp"/>
+
+    <fragment
+        android:id="@+id/step_video_container"
+        android:name="com.nikita.recipiesapp.views.steps.StepVideoFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toEndOf="@id/step_list"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <fragment
         android:id="@+id/step_detail_container"
         android:name="com.nikita.recipiesapp.views.steps.StepDetailFragment"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"/>
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/step_video_container"
+        app:layout_constraintStart_toEndOf="@id/step_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</LinearLayout>
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/step_list"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -16,7 +16,7 @@
         <activity
             android:name=".views.steps.StepListActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.StepListTheme"/>
         <activity
             android:name=".views.steps.StepDetailActivity"
             android:parentActivityName=".views.steps.StepListActivity"
