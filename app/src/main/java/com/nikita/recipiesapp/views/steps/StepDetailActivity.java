@@ -3,6 +3,7 @@ package com.nikita.recipiesapp.views.steps;
 import android.arch.lifecycle.LifecycleActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -38,19 +39,36 @@ public class StepDetailActivity extends LifecycleActivity implements Renderer<Ap
     Toolbar toolbar = findViewById(R.id.toolbar);
 
     prevFab = findViewById(R.id.previous_fab);
-    prevFab.setOnClickListener(view -> App.appStore.dispatch(new MoveToPreviousStep()));
+    if (prevFab != null) {
+      prevFab.setOnClickListener(view -> App.appStore.dispatch(new MoveToPreviousStep()));
+    }
     nextFab = findViewById(R.id.next_fab);
-    nextFab.setOnClickListener(view -> App.appStore.dispatch(new MoveToNextStep()));
+    if (nextFab != null) {
+      nextFab.setOnClickListener(view -> App.appStore.dispatch(new MoveToNextStep()));
+    }
 
     // TODO Show the Up button in the action bar.
+    int orientation = getResources().getConfiguration().orientation;
+    if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+      getWindow().getDecorView().setSystemUiVisibility(
+          View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+              | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+              | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+              | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+              | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
 
     App.appStore.subscribe(this);
   }
 
   @Override
   public void render(@NonNull AppState state) {
-    prevFab.setVisibility(state.previousStep() != null ? View.VISIBLE : View.GONE);
-    nextFab.setVisibility(state.nextStep() != null ? View.VISIBLE : View.GONE);
+    if (prevFab != null) {
+      prevFab.setVisibility(state.previousStep() != null ? View.VISIBLE : View.GONE);
+    }
+    if (nextFab != null) {
+      nextFab.setVisibility(state.nextStep() != null ? View.VISIBLE : View.GONE);
+    }
   }
 
   @Override
