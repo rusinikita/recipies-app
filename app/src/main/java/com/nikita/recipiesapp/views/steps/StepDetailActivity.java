@@ -37,6 +37,7 @@ public class StepDetailActivity extends AppCompatActivity implements Renderer<Ap
     setContentView(R.layout.step_detail_activity);
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+    setTitle("");
     //noinspection ConstantConditions
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
+import com.nikita.recipiesapp.actions.AddSelectedRecipeToWidget;
 import com.nikita.recipiesapp.actions.SelectStep;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Recipe;
@@ -26,7 +27,7 @@ import com.nikita.recipiesapp.common.redux.Renderer;
  * item details side-by-side using two vertical panes.
  */
 public class StepListActivity extends AppCompatActivity implements Renderer<AppState> {
-  private final StepListController stepListController = new StepListController(this::changeStep);
+  private final StepListController stepListController = new StepListController(this::changeStep, v -> addToWidgetClick());
   private boolean shouldOpenDetailsActivity = true;
   private ActionBar actionBar;
 
@@ -59,6 +60,7 @@ public class StepListActivity extends AppCompatActivity implements Renderer<AppS
   public void render(@NonNull AppState appState) {
     Recipe recipe = appState.selectedRecipe();
     setTitle(recipe.name);
+    actionBar.setTitle(recipe.name);
     stepListController.setData(recipe.ingredients, recipe.steps, appState.selectedStep());
   }
 
@@ -69,5 +71,9 @@ public class StepListActivity extends AppCompatActivity implements Renderer<AppS
     if (shouldOpenDetailsActivity) {
       StepDetailActivity.start(this);
     }
+  }
+
+  private void addToWidgetClick() {
+    App.appStore.dispatch(new AddSelectedRecipeToWidget());
   }
 }

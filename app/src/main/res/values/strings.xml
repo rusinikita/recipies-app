@@ -6,4 +6,5 @@
 
     <string name="step_list_ingredients_header">Ingredients</string>
     <string name="step_list_steps_header">Steps</string>
+    <string name="step_list_add_to_widget_button">Add to widget</string>
 </resources>
