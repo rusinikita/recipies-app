@@ -1,11 +1,11 @@
 package com.nikita.recipiesapp.views.recipes;
 
-import android.arch.lifecycle.LifecycleActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -17,7 +17,7 @@ import com.nikita.recipiesapp.common.models.Recipe;
 import com.nikita.recipiesapp.common.redux.Renderer;
 import com.nikita.recipiesapp.views.steps.StepListActivity;
 
-public final class RecipesActivity extends LifecycleActivity implements Renderer<AppState> {
+public final class RecipesActivity extends AppCompatActivity implements Renderer<AppState> {
   private AppBarLayout appBar;
   private final RecipesController recipesController = new RecipesController(this::onRecipeSelection);
 
@@ -27,6 +27,7 @@ public final class RecipesActivity extends LifecycleActivity implements Renderer
     setContentView(R.layout.recipes_activity);
 
     appBar = findViewById(R.id.app_bar);
+    setSupportActionBar(findViewById(R.id.toolbar));
 
     RecyclerView recyclerView = findViewById(R.id.recycler_view);
     recyclerView.setLayoutManager(new GridLayoutManager(this, 1));

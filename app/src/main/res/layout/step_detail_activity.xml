@@ -25,7 +25,6 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-
             <fragment
                 android:id="@+id/step_video_container"
                 android:layout_width="match_parent"

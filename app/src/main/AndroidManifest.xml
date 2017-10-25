@@ -2,30 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.nikita.recipiesapp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="false">
-        <activity
-            android:name=".views.steps.StepListActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.StepListTheme"/>
-        <activity
-            android:name=".views.steps.StepDetailActivity"
-            android:parentActivityName=".views.steps.StepListActivity"
-            android:label="@string/title_step_detail"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nikita.recipiesapp.views.steps.StepListActivity"/>
-        </activity>
+        android:theme="@style/AppTheme">
         <activity
             android:name=".views.recipes.RecipesActivity"
             android:label="@string/title_activity_recipes"
@@ -35,6 +22,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".views.steps.StepListActivity"
+            android:parentActivityName=".views.recipes.RecipesActivity"
+            android:theme="@style/AppTheme.StepListTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.recipes.RecipesActivity"/>
+        </activity>
+        <activity
+            android:name=".views.steps.StepDetailActivity"
+            android:parentActivityName=".views.steps.StepListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.steps.StepListActivity"/>
         </activity>
     </application>
 

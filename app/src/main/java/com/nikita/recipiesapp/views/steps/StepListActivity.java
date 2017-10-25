@@ -1,9 +1,10 @@
 package com.nikita.recipiesapp.views.steps;
 
-import android.arch.lifecycle.LifecycleActivity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,9 +25,10 @@ import com.nikita.recipiesapp.common.redux.Renderer;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class StepListActivity extends LifecycleActivity implements Renderer<AppState> {
+public class StepListActivity extends AppCompatActivity implements Renderer<AppState> {
   private final StepListController stepListController = new StepListController(this::changeStep);
   private boolean shouldOpenDetailsActivity = true;
+  private ActionBar actionBar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,10 @@ public class StepListActivity extends LifecycleActivity implements Renderer<AppS
     setContentView(R.layout.step_list_activity);
 
     Toolbar toolbar = findViewById(R.id.toolbar);
-    toolbar.setTitle(getTitle());
+    setSupportActionBar(toolbar);
+    actionBar = getSupportActionBar();
+    //noinspection ConstantConditions
+    actionBar.setDisplayHomeAsUpEnabled(true);
 
     FloatingActionButton fab = findViewById(R.id.fab);
     if (fab != null) {
@@ -53,6 +58,7 @@ public class StepListActivity extends LifecycleActivity implements Renderer<AppS
   @Override
   public void render(@NonNull AppState appState) {
     Recipe recipe = appState.selectedRecipe();
+    setTitle(recipe.name);
     stepListController.setData(recipe.ingredients, recipe.steps, appState.selectedStep());
   }
 

@@ -1,13 +1,12 @@
 package com.nikita.recipiesapp.views.steps;
 
-import android.arch.lifecycle.LifecycleActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.nikita.recipiesapp.App;
@@ -23,7 +22,7 @@ import com.nikita.recipiesapp.common.redux.Renderer;
  * item details are presented side-by-side with a list of items
  * in a {@link StepListActivity}.
  */
-public class StepDetailActivity extends LifecycleActivity implements Renderer<AppState> {
+public class StepDetailActivity extends AppCompatActivity implements Renderer<AppState> {
 
   private View prevFab;
   private View nextFab;
@@ -37,6 +36,9 @@ public class StepDetailActivity extends LifecycleActivity implements Renderer<Ap
     super.onCreate(savedInstanceState);
     setContentView(R.layout.step_detail_activity);
     Toolbar toolbar = findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    //noinspection ConstantConditions
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     prevFab = findViewById(R.id.previous_fab);
     if (prevFab != null) {
@@ -70,21 +72,5 @@ public class StepDetailActivity extends LifecycleActivity implements Renderer<Ap
     if (nextFab != null) {
       nextFab.setVisibility(state.nextStep() != null ? View.VISIBLE : View.GONE);
     }
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
-    if (id == android.R.id.home) {
-      // This ID represents the Home or Up button. In the case of this
-      // activity, the Up button is shown. For
-      // more details, see the Navigation pattern on Android Design:
-      //
-      // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-      //
-      navigateUpTo(new Intent(this, StepListActivity.class));
-      return true;
-    }
-    return super.onOptionsItemSelected(item);
   }
 }

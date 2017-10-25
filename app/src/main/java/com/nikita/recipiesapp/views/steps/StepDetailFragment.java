@@ -1,8 +1,8 @@
 package com.nikita.recipiesapp.views.steps;
 
-import android.arch.lifecycle.LifecycleFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,7 @@ import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Step;
 import com.nikita.recipiesapp.common.redux.Renderer;
 
-public class StepDetailFragment extends LifecycleFragment implements Renderer<AppState> {
+public class StepDetailFragment extends Fragment implements Renderer<AppState> {
   private TextView description;
 
   /**
