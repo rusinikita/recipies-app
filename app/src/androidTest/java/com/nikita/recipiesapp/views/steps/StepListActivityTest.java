@@ -1,16 +1,17 @@
 package com.nikita.recipiesapp.views.steps;
 
-import android.support.test.espresso.intent.Intents;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.RecyclerViewMatcher;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Recipe;
 import com.nikita.recipiesapp.middlewares.DataLoadingMiddleware;
 
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,13 +19,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.nikita.recipiesapp.EspressoTestUtils.callRender;
 
@@ -32,23 +27,13 @@ import static com.nikita.recipiesapp.EspressoTestUtils.callRender;
 @LargeTest
 public final class StepListActivityTest {
 
+  @BeforeClass
+  public static void initialize() {
+    App.appStore.setUiTestMode(true);
+  }
+
   @Rule
   public ActivityTestRule<StepListActivity> testRule = new ActivityTestRule<>(StepListActivity.class);
-
-  @Test
-  public void shouldOpenStepDetailScreen() throws Exception {
-    List<Recipe> dummyRecipes = DataLoadingMiddleware.getDummyRecipes();
-    callRender(testRule, AppState.initial().withRecipes(dummyRecipes));
-
-    Intents.init();
-
-    onView(withId(R.id.recycler_view))
-        .perform(actionOnItemAtPosition(0, click()));
-
-    intended(hasComponent(StepDetailActivity.class.getName()));
-
-    Intents.release();
-  }
 
   @Test
   public void shouldShowItems() throws Exception {
@@ -59,10 +44,10 @@ public final class StepListActivityTest {
         .withSelectedRecipe(selectedRecipe));
 
     // 9 ingredients + 7 steps + 2 headers
-    onView(RecyclerViewMatcher.withRecyclerView(R.id.recycler_view).atPositionWithScroll(1))
-        .check(matches(hasDescendant(withText(selectedRecipe.ingredients.get(0).ingredient))));
+    onView(RecyclerViewMatcher.withRecyclerView(R.id.step_list).atPositionWithScroll(1))
+        .check(matches(withText(selectedRecipe.ingredients.get(0).description)));
 
-    onView(RecyclerViewMatcher.withRecyclerView(R.id.recycler_view).atPositionWithScroll(selectedRecipe.ingredients.size() + 2))
-        .check(matches(hasDescendant(withText(selectedRecipe.steps.get(0).shortDescription))));
+    onView(RecyclerViewMatcher.withRecyclerView(R.id.step_list).atPositionWithScroll(selectedRecipe.ingredients.size() + 3))
+        .check(matches(withText(selectedRecipe.steps.get(0).shortDescription)));
   }
 }

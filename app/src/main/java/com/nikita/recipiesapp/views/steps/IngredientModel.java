@@ -24,6 +24,6 @@ class IngredientModel extends EpoxyModelWithHolder<TextViewHolder> {
   @Override
   public void bind(TextViewHolder holder) {
     super.bind(holder);
-    holder.text.setText(ingredient.ingredient + ", " + ingredient.quantity + " " + ingredient.measure);
+    holder.text.setText(ingredient.description);
   }
 }

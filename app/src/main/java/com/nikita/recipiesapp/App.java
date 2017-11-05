@@ -42,9 +42,7 @@ public final class App extends Application {
         new AddRecipeToWidgetMiddleware()
     };
     appStore = new Store<>(appReducer, middlewares, AppState.initial());
-    if (!BuildConfig.IS_UI_TESTING) {
-      appStore.dispatch(new LoadData());
-    }
+    appStore.dispatch(new LoadData());
   }
 
   @Override

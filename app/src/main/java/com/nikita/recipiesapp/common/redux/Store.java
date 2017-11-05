@@ -4,14 +4,16 @@ package com.nikita.recipiesapp.common.redux;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
-import com.nikita.recipiesapp.BuildConfig;
 import com.nikita.recipiesapp.common.utils.Check;
 
 public final class Store<State> {
   private final MutableLiveData<State> liveData = new MutableLiveData<>();
   private final Reducer<State> reducer;
   private final Consumer<Action> actionConsumer;
+  private boolean isUiTestingMode = false;
 
   public Store(@NonNull Reducer<State> reducer, @NonNull State initialState) {
     this.reducer = reducer;
@@ -33,7 +35,7 @@ public final class Store<State> {
   }
 
   public <Subscriber extends LifecycleOwner & Renderer<State>> void subscribe(final Subscriber subscriber) {
-    if (BuildConfig.IS_UI_TESTING) return;
+    if (isUiTestingMode) return;
 
     liveData.observe(subscriber, state -> {
       Check.notNull(state);
@@ -42,9 +44,15 @@ public final class Store<State> {
   }
 
   public void dispatch(Action action) {
-    if (BuildConfig.IS_UI_TESTING) return;
+    if (isUiTestingMode) return;
 
     actionConsumer.consume(action);
+  }
+
+  @VisibleForTesting
+  public void setUiTestMode(boolean isUiTest) {
+    Log.d("", "Test mode changed: " + isUiTest);
+    isUiTestingMode = isUiTest;
   }
 
   private Consumer<Action> getStoreConsumer() {

@@ -6,6 +6,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.RecyclerViewMatcher;
 import com.nikita.recipiesapp.common.AppState;
@@ -13,6 +14,7 @@ import com.nikita.recipiesapp.common.models.Recipe;
 import com.nikita.recipiesapp.middlewares.DataLoadingMiddleware;
 import com.nikita.recipiesapp.views.steps.StepListActivity;
 
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +39,11 @@ import static org.hamcrest.Matchers.allOf;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public final class RecipesActivityTest {
+
+  @BeforeClass
+  public static void initialize() {
+    App.appStore.setUiTestMode(true);
+  }
 
   @Rule
   public ActivityTestRule<RecipesActivity> testRule = new ActivityTestRule<>(
