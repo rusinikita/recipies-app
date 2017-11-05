@@ -37,7 +37,6 @@ public class StepDetailActivity extends AppCompatActivity implements Renderer<Ap
     setContentView(R.layout.step_detail_activity);
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
-    setTitle("");
     //noinspection ConstantConditions
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -67,6 +66,7 @@ public class StepDetailActivity extends AppCompatActivity implements Renderer<Ap
 
   @Override
   public void render(@NonNull AppState state) {
+    setTitle(state.selectedStep().shortDescription);
     if (prevFab != null) {
       prevFab.setVisibility(state.previousStep() != null ? View.VISIBLE : View.GONE);
     }

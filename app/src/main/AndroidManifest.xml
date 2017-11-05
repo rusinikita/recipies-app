@@ -16,7 +16,7 @@
         <activity
             android:name=".views.recipes.RecipesActivity"
             android:label="@string/title_activity_recipes"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -26,7 +26,7 @@
         <activity
             android:name=".views.steps.StepListActivity"
             android:parentActivityName=".views.recipes.RecipesActivity"
-            android:theme="@style/AppTheme.StepListTheme">
+            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".views.recipes.RecipesActivity"/>
