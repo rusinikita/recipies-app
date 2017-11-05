@@ -80,7 +80,7 @@ public final class RecipesActivityTest {
   }
 
   @Test
-  public void shouldShowNotofication() {
+  public void shouldShowNotification() {
     String errorText = "text text";
     callRender(testRule, AppState.initial().withNotification(errorText));
 

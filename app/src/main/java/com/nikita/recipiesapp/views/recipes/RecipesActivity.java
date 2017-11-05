@@ -1,6 +1,7 @@
 package com.nikita.recipiesapp.views.recipes;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.dgreenhalgh.android.simpleitemdecoration.grid.GridDividerItemDecoration;
 import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.actions.SelectRecipe;
@@ -30,7 +32,11 @@ public final class RecipesActivity extends AppCompatActivity implements Renderer
     setSupportActionBar(findViewById(R.id.toolbar));
 
     RecyclerView recyclerView = findViewById(R.id.recycler_view);
-    recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+    int spanCount = getResources().getInteger(R.integer.recipes_column_count);
+    Drawable divider = getResources().getDrawable(R.drawable.item_offset_divider);
+    GridDividerItemDecoration offsetItemDecoration = new GridDividerItemDecoration(divider, divider, spanCount);
+    recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount));
+    recyclerView.addItemDecoration(offsetItemDecoration);
     recyclerView.setAdapter(recipesController.getAdapter());
 
     App.appStore.subscribe(this);
