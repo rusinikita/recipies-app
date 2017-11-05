@@ -10,13 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.dgreenhalgh.android.simpleitemdecoration.grid.GridDividerItemDecoration;
 import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.actions.SelectRecipe;
 import com.nikita.recipiesapp.common.AppState;
 import com.nikita.recipiesapp.common.models.Recipe;
 import com.nikita.recipiesapp.common.redux.Renderer;
+import com.nikita.recipiesapp.common.utils.GridLayoutManagerDividerDecoration;
 import com.nikita.recipiesapp.views.steps.StepListActivity;
 
 public final class RecipesActivity extends AppCompatActivity implements Renderer<AppState> {
@@ -34,7 +34,7 @@ public final class RecipesActivity extends AppCompatActivity implements Renderer
     RecyclerView recyclerView = findViewById(R.id.recycler_view);
     int spanCount = getResources().getInteger(R.integer.recipes_column_count);
     Drawable divider = getResources().getDrawable(R.drawable.item_offset_divider);
-    GridDividerItemDecoration offsetItemDecoration = new GridDividerItemDecoration(divider, divider, spanCount);
+    GridLayoutManagerDividerDecoration offsetItemDecoration = new GridLayoutManagerDividerDecoration(divider, divider, spanCount);
     recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount));
     recyclerView.addItemDecoration(offsetItemDecoration);
     recyclerView.setAdapter(recipesController.getAdapter());
