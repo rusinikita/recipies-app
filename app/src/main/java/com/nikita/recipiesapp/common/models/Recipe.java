@@ -1,6 +1,8 @@
 package com.nikita.recipiesapp.common.models;
 
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 public final class Recipe {
@@ -8,8 +10,8 @@ public final class Recipe {
   public final String name;
   public final List<Ingredient> ingredients;
   public final List<Step> steps;
-  public final int servings;
-  private final String image;
+  private final int servings;
+  public final String image;
 
   public Recipe(int id,
                 String name,
@@ -22,10 +24,10 @@ public final class Recipe {
     this.ingredients = ingredients;
     this.steps = steps;
     this.servings = servings;
-    this.image = image;
+    this.image = getImageUri(id, image);
   }
 
-  public String getImageUri() {
+  private static String getImageUri(int id, @Nullable String image) {
     if (image != null && !image.isEmpty()) return image;
 
     String url;

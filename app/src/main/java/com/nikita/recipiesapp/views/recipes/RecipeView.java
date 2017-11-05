@@ -38,7 +38,7 @@ final class RecipeView extends CardView {
   @ModelProp(options = ModelProp.Option.DoNotHash)
   void setRecipe(Recipe recipe) {
     name.setText(recipe.name);
-    image.setImageURI(recipe.getImageUri());
+    image.setImageURI(recipe.image);
   }
 
   @ModelProp(options = ModelProp.Option.DoNotHash)

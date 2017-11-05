@@ -2,6 +2,7 @@ package com.nikita.recipiesapp.views.steps;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nikita.recipiesapp.App;
 import com.nikita.recipiesapp.R;
 import com.nikita.recipiesapp.actions.AddSelectedRecipeToWidget;
@@ -30,13 +32,16 @@ public class StepListActivity extends AppCompatActivity implements Renderer<AppS
   private final StepListController stepListController = new StepListController(this::changeStep, v -> addToWidgetClick());
   private boolean shouldOpenDetailsActivity = true;
   private ActionBar actionBar;
+  private SimpleDraweeView headerImageView;
+  private Toolbar toolbar;
+  private CollapsingToolbarLayout collapsingToolbarLayout;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.step_list_activity);
 
-    Toolbar toolbar = findViewById(R.id.toolbar);
+    toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     actionBar = getSupportActionBar();
     //noinspection ConstantConditions
@@ -46,6 +51,8 @@ public class StepListActivity extends AppCompatActivity implements Renderer<AppS
     if (fab != null) {
       fab.setOnClickListener(view -> StepDetailActivity.start(this));
     }
+    headerImageView = findViewById(R.id.header_image);
+    collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
 
     RecyclerView recyclerView = findViewById(R.id.step_list);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -59,7 +66,13 @@ public class StepListActivity extends AppCompatActivity implements Renderer<AppS
   @Override
   public void render(@NonNull AppState appState) {
     Recipe recipe = appState.selectedRecipe();
-    setTitle(recipe.name);
+    if (headerImageView != null) {
+      headerImageView.setImageURI(recipe.image);
+    }
+    if (collapsingToolbarLayout != null) {
+      collapsingToolbarLayout.setTitle(recipe.name);
+    }
+    toolbar.setTitle(recipe.name);
     actionBar.setTitle(recipe.name);
     stepListController.setData(recipe.ingredients, recipe.steps, appState.selectedStep());
   }

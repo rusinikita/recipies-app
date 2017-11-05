@@ -25,13 +25,12 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:title="@string/app_name">
 
-            <ImageView
-                android:id="@+id/image"
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/header_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/main_picture"
                 />
 
             <android.support.v7.widget.Toolbar

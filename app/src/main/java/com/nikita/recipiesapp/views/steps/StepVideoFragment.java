@@ -72,7 +72,7 @@ public class StepVideoFragment extends Fragment implements Renderer<AppState> {
       imageView.setVisibility(View.VISIBLE);
       videoView.setVisibility(View.GONE);
       releasePlayer();
-      imageView.setImageURI(recipe.getImageUri());
+      imageView.setImageURI(recipe.image);
     }
   }
 
