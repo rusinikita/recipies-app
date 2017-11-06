@@ -2,34 +2,36 @@ package com.nikita.recipiesapp.common.redux;
 
 
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import com.nikita.recipiesapp.common.utils.Check;
+import com.nikita.recipiesapp.common.utils.LifecycleAwareRenderer;
+
+import io.reactivex.subjects.BehaviorSubject;
 
 public final class Store<State> {
-  private final MutableLiveData<State> liveData = new MutableLiveData<>();
+  private final BehaviorSubject<State> subject;
   private final Reducer<State> reducer;
   private final Consumer<Action> actionConsumer;
   private boolean isUiTestingMode = false;
 
   public Store(@NonNull Reducer<State> reducer, @NonNull State initialState) {
     this.reducer = reducer;
-    liveData.setValue(initialState);
+    subject = BehaviorSubject.createDefault(initialState);
     this.actionConsumer = this.getStoreConsumer();
   }
 
   public Store(@NonNull Reducer<State> reducer, @NonNull Middleware<State>[] middlewares, @NonNull State initialState) {
     this.reducer = reducer;
-    liveData.setValue(initialState);
+    subject = BehaviorSubject.createDefault(initialState);
     this.actionConsumer = combineMiddlewares(this, middlewares);
   }
 
   @NonNull
   public State getState() {
-    State state = liveData.getValue();
+    State state = subject.getValue();
     Check.notNull(state);
     return state;
   }
@@ -37,10 +39,7 @@ public final class Store<State> {
   public <Subscriber extends LifecycleOwner & Renderer<State>> void subscribe(final Subscriber subscriber) {
     if (isUiTestingMode) return;
 
-    liveData.observe(subscriber, state -> {
-      Check.notNull(state);
-      subscriber.render(state);
-    });
+    new LifecycleAwareRenderer<>(subscriber, subject);
   }
 
   public void dispatch(Action action) {
@@ -56,7 +55,7 @@ public final class Store<State> {
   }
 
   private Consumer<Action> getStoreConsumer() {
-    return action -> liveData.postValue(reducer.reduce(getState(), action));
+    return action -> subject.onNext(reducer.reduce(getState(), action));
   }
 
   public static class ReducerCombiner<State> implements Reducer<State> {

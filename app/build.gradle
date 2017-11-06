@@ -30,8 +30,8 @@ task runEspressoTest {
 
 dependencies {
     // core
-    implementation "android.arch.lifecycle:extensions:1.0.0-rc1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-rc1"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
 
     // design
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -59,6 +59,4 @@ dependencies {
 
     // force usage of dependencies in the test app, since it is internally used by the runner module.
     androidTestImplementation "com.android.support:design:$supportLibVersion"
-    androidTestImplementation "android.arch.lifecycle:runtime:1.0.3"
-    androidTestImplementation "android.arch.lifecycle:common:1.0.3"
 }
