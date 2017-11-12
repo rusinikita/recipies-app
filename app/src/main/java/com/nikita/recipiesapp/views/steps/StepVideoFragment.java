@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,16 +36,29 @@ import com.nikita.recipiesapp.common.models.Step;
 import com.nikita.recipiesapp.common.redux.Renderer;
 
 public class StepVideoFragment extends Fragment implements Renderer<AppState> {
+  private static final String PLAY_POSITION = "play_position";
+  private static final String PLAY_VIDEO = "play_video";
   private SimpleDraweeView imageView;
   private SimpleExoPlayerView videoView;
   private SimpleExoPlayer player;
   private String nowPlayingUrl;
+  private String restoredVideoUrl = null;
+  private long restoredPlayPosition = -1;
 
   /**
    * Mandatory empty constructor for the fragment manager to instantiate the
    * fragment (e.g. upon screen orientation changes).
    */
   public StepVideoFragment() {
+  }
+
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (savedInstanceState != null) {
+      restoredVideoUrl = savedInstanceState.getString(PLAY_VIDEO);
+      restoredPlayPosition = savedInstanceState.getLong(PLAY_POSITION, -1);
+    }
   }
 
   @Override
@@ -72,7 +86,8 @@ public class StepVideoFragment extends Fragment implements Renderer<AppState> {
       imageView.setVisibility(View.VISIBLE);
       videoView.setVisibility(View.GONE);
       releasePlayer();
-      imageView.setImageURI(recipe.image);
+      String imageUrl = step.thumbnailURL == null || step.thumbnailURL.isEmpty() ? recipe.image : step.thumbnailURL;
+      imageView.setImageURI(imageUrl);
     }
   }
 
@@ -96,8 +111,22 @@ public class StepVideoFragment extends Fragment implements Renderer<AppState> {
       LoopingMediaSource loopingSource = new LoopingMediaSource(videoSource, 10);
 
       player.prepare(loopingSource);
+
+      if (videoUrl.equals(restoredVideoUrl) && restoredPlayPosition > 0) {
+        player.seekTo(restoredPlayPosition);
+      }
+
       player.setPlayWhenReady(true);
       nowPlayingUrl = videoUrl;
+    }
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    if (restoredVideoUrl != null) {
+      outState.putString(PLAY_VIDEO, restoredVideoUrl);
+      outState.putLong(PLAY_POSITION, restoredPlayPosition);
     }
   }
 
@@ -116,6 +145,8 @@ public class StepVideoFragment extends Fragment implements Renderer<AppState> {
 
   private void releasePlayer() {
     if (player != null) {
+      restoredVideoUrl = nowPlayingUrl;
+      restoredPlayPosition = player.getCurrentPosition();
       player.stop();
       player.release();
       player = null;
