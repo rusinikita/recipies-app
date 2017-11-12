@@ -113,6 +113,13 @@ public final class DataLoadingMiddleware extends Middleware<AppState> {
       String description = jo.getString("description");
       String videoUrl = jo.getString("videoURL");
       String thumbnailUrl = jo.getString("thumbnailURL");
+      // checking api error
+      if (thumbnailUrl != null && (thumbnailUrl.contains(".mp4") || thumbnailUrl.contains(".avi"))) {
+        if (videoUrl == null || videoUrl.isEmpty()) {
+          videoUrl = thumbnailUrl;
+        }
+        thumbnailUrl = null;
+      }
 
       steps.add(new Step(id, shortDescription, description, videoUrl, thumbnailUrl));
     }

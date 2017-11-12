@@ -36,10 +36,11 @@ public class StepDetailActivity extends AppCompatActivity implements Renderer<Ap
     super.onCreate(savedInstanceState);
     setContentView(R.layout.step_detail_activity);
     Toolbar toolbar = findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    //noinspection ConstantConditions
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+    if (toolbar != null) {
+      setSupportActionBar(toolbar);
+      //noinspection ConstantConditions
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
     prevFab = findViewById(R.id.previous_fab);
     if (prevFab != null) {
       prevFab.setOnClickListener(view -> App.appStore.dispatch(new MoveToPreviousStep()));
@@ -49,7 +50,6 @@ public class StepDetailActivity extends AppCompatActivity implements Renderer<Ap
       nextFab.setOnClickListener(view -> App.appStore.dispatch(new MoveToNextStep()));
     }
 
-    // TODO Show the Up button in the action bar.
     boolean landscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     boolean isTablet = getResources().getConfiguration().smallestScreenWidthDp > 600;
     if (landscape && !isTablet) {
